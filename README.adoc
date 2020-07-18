@@ -16,6 +16,44 @@ This module will allow you to use sendgrid for sending emails, such as forgot pa
     log="/path/to/mail log file"
 ----
 
+== Usage
+
+If this module is installed, then all internal Xataface emails will be sent using SendGrid automatically.  If you want to trigger email to send using the SendGrid module, you can fire a "mail" event on the Application as follows:
+
+[source,php]
+----
+$event = new StdClass;
+$event->email = "Some Person<someone@example.com";
+$event->subject = "This is a test email";
+$event->message = array(
+    'text/plain' => 'Plain text message body',
+    'text/html' => '<strong>HTML Text body</strong>'
+);
+$event->headers = $headers; // in same form as php mail() function
+$event->from = "Me <me@example.com>";   // Overrides From: in headers if both provided
+
+$event->parameters = $params; // in same form as php mail() function
+
+// Trigger mail event
+$app->fireEvent('mail', $event);
+
+if (@$event->consumed) {
+    // If sendgrid handled the event it will set the consumed flag
+    // Result stored in $event->out
+    $res = $event->out;
+} else {
+
+    // The event was not handled.  Fall back to regular mail() func
+    $res = mail($event->email,
+                $event->subject,
+                $event->message['text/plain'],
+                $event->headers,
+                $event->params);
+
+}
+            
+----
+
 == Credits
 
 . Created by https://sjhannah.com[Steve Hannah]
