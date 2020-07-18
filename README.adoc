@@ -1,0 +1,23 @@
+= Xataface SendGrid Module
+
+This module will allow you to use sendgrid for sending emails, such as forgot password, in your Xataface app.
+
+== Installation
+
+1. Copy the sendgrid directory into your application's "modules" directory. You should have "$APPROOT/modules/sendgrid/sendgrid.php"
+2. Install sendgrid-php into your app https://github.com/sendgrid/sendgrid-php#install-package
+3. Add `modules_sendgrid=modules/sendgrid/sendgrid.php` to the [_modules] section of your conf.ini file.
+4. Add `[modules_sendgrid]` section to your conf.ini file as follows:
++
+[source,ini]
+----
+[modules_sendgrid]
+    API_KEY="Your Sendgrid API Key"
+    log="/path/to/mail log file"
+----
+
+== Credits
+
+. Created by https://sjhannah.com[Steve Hannah]
+. https://xataface.com[Xataface]
+. https://github.com/sendgrid/sendgrid-php[SendGrid PHP]
